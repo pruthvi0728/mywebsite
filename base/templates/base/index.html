@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% static "images" as pic %}
 <html lang="en-US">
   <head>
     <meta charset="UTF-8">
@@ -41,7 +42,7 @@
       <div class="page-header-image" data-parallax="true" style="background-image: url('{% static '/images/cc-bg-1.jpg' %}');"></div>
       <div class="container">
         <div class="content-center">
-          <div class="cc-profile-image"><a href="https://bit.ly/solankiraj"><img src="{% static '/images/pruthvi.jpg' %}" alt="Image"/></a></div>
+          <div class="cc-profile-image"><a href="https://bit.ly/solankiraj"><img src="{{pic}}/pruthvi.jpg" alt="Image"/></a></div>
           <div class="h2 title">Pruthvi Patel</div>
           <p class="category text-white">Web Developer, Backend Developer</p><a class="btn btn-primary smooth-scroll mr-2" href="#contact" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Hire Me</a><a class="btn btn-primary" href="http://bit.ly/impruthvipatel" data-aos="zoom-in" data-aos-anchor="data-aos-anchor">Download CV</a>
         </div>
@@ -452,7 +453,8 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="card-body">
-                    <form action="contact_me.php" method="POST">
+                    <form action="message" method="POST">
+                      {% csrf_token %}
                       <div class="p pb-3"><strong>Feel free to contact me </strong></div>
                       <div class="row mb-3">
                         <div class="col">
@@ -471,14 +473,14 @@
                       <div class="row mb-3">
                         <div class="col">
                           <div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                            <input class="form-control" type="email" name="replyto" placeholder="E-mail" required="required"/>
+                            <input class="form-control" type="email" name="emailid" placeholder="E-mail" required="required"/>
                           </div>
                         </div>
                       </div>
                       <div class="row mb-3">
                         <div class="col">
                           <div class="form-group">
-                            <textarea class="form-control" name="message" placeholder="Your Message" required="required"></textarea>
+                            <textarea class="form-control" name="usrmessage" placeholder="Your Message" required="required"></textarea>
                           </div>
                         </div>
                       </div>
