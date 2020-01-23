@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Message
 # Create your views here.
 
@@ -12,4 +12,7 @@ def message(request):
     subject = request.POST["subject"]
     emailid = request.POST["emailid"]
     usrmessage = request.POST["usrmessage"]
-    return render(request, 'UsrMessage.html', {'name': name, 'subject': subject, 'emailid': emailid, 'usrmessage': usrmessage})
+
+    msg = Message.objects.create(name=name, subject=subject, emailid=emailid, usrmessage=usrmessage)
+    msg.save()
+    return redirect('/')
