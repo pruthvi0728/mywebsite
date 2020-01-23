@@ -490,6 +490,9 @@
                         </div>
                       </div>
                     </form>
+                    {% for message in messages %}
+                      <script>alert("{{message}}");</script>
+                    {% endfor %}
                   </div>
                 </div>
                 <div class="col-md-6">

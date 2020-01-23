@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Message
+from django.contrib import messages
 # Create your views here.
 
 
@@ -15,4 +16,5 @@ def message(request):
 
     msg = Message.objects.create(name=name, subject=subject, emailid=emailid, usrmessage=usrmessage)
     msg.save()
+    messages.info(request, "Message Send Successfully")
     return redirect('/')
