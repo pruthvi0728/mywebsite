@@ -12,31 +12,59 @@
     <link href="https://fonts.googleapis.com/css?family=Merriweather|Rubik&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="wrapper fadeInDown">
-  <div id="formContent">
-    <!-- Tabs Titles -->
+    <div class="wrapper fadeInDown container">
+        <div class="row">
+            <div class="col-md-2">
+                {% if user.username == 'Admin_Pruthvi' %}
+                    <div class="fadeIn first">
+                      <span style="">Chat Board</span>
+                        <h6>Hello , {{user.first_name}}</h6>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md-10">
+                <div id="formContent">
+                    <div class="fadeIn first">
+                      <span style="">Chat Board</span>
+                        <h6>Hello , {{user.first_name}}</h6>
+                    </div>
 
-    <!-- Icon -->
-    <div class="fadeIn first">
-      <span style="">Chat Board</span>
-        <h6>Hello , {{user.first_name}}</h6>
+                    <div class="fadeIn second overflow-auto" id="chatbox">
+                        {% for msg in msgs %}
+                            {% if user.username == msg.cbusername %}
+                                {% if msg.cbmsgbyuser %}
+                                    <h5>You: {{msg.cbmessage}}</h5>
+                                {% endif %}
+                                {% if msg.cbmsgbyadmin %}
+                                    <h5>Admin: {{msg.cbmessage}}</h5>
+                                {% endif %}
+                            {% endif %}
+                            {% if user.username == msg.cbadminname %}
+                                {% if msg.cbmsgbyuser %}
+                                    <h5>User: {{msg.cbmessage}}</h5>
+                                {% endif %}
+                                {% if msg.cbmsgbyadmin %}
+                                    <h5>You: {{msg.cbmessage}}</h5>
+                                {% endif %}
+                            {% endif %}
+                        {% empty %}
+                            <h6>Hello , {{user.first_name}} Please send message to show here</h6>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Chat Form -->
+                    <form action="chatmain" method="post">
+                        {% csrf_token %}
+                        <input type="text" class="fadeIn third" name="msg" placeholder="Type a message" required>
+                        <input type="hidden" class="fadeIn third" name="username" value="{{user.username}}" required>
+                        <input type="submit" class="fadeIn fourth" name="send" value="Send">
+                    </form>
+                    <div id="formFooter">
+                      <a class="underlineHover" href="logout">LogOut</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- Login Form -->
-    <form action="chatmain" method="post">
-        {% csrf_token %}
-        <input type="text" class="fadeIn second" name="msg" placeholder="Type a message" required>
-        <input type="submit" class="fadeIn fourth" name="send" value="Send">
-    </form>
-    {% for message in messages %}
-          <script>alert("{{message}}");</script>
-    {% endfor %}
-    <!-- Remind Passowrd -->
-    <div id="formFooter">
-      <a class="underlineHover" href="logout">LogOut</a>
-    </div>
-
-  </div>
-</div>
 </body>
 </html>

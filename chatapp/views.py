@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
+from .models import Chatboard
 from django.contrib import messages
 # Create your views here.
 
@@ -50,8 +51,27 @@ def register(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('login')
+    return redirect('/')
 
 
 def chatmain(request):
-    return render(request, 'chatmain.html')
+    if request.method == 'POST':
+        cbmsg = request.POST['msg']
+        cbadminname = 'Admin_Pruthvi'
+        cbusername = request.POST['username']
+
+        if cbusername == cbadminname:
+            cbmsgbyuser = 'False'
+            cbmsgbyadmin = 'True'
+            cbusername = 'php28'
+            msg = Chatboard.objects.create(cbusername=cbusername, cbadminname=cbadminname, cbmessage=cbmsg,
+                                           cbmsgbyuser=cbmsgbyuser,cbmsgbyadmin=cbmsgbyadmin)
+            msg.save()
+            return redirect('chatmain')
+        else:
+            msg = Chatboard.objects.create(cbusername=cbusername, cbadminname=cbadminname, cbmessage=cbmsg)
+            msg.save()
+            return redirect('chatmain')
+    else:
+        msgs = Chatboard.objects.all()
+        return render(request, 'chatmain.html', {'msgs': msgs})
