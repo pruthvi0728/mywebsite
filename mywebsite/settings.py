@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'base',
+    'chatapp',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +56,7 @@ ROOT_URLCONF = 'mywebsite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'base/templates/base')],
+        'DIRS': [os.path.join(BASE_DIR, 'base/templates/base'), os.path.join(BASE_DIR, 'chatapp/templates/chatapp')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

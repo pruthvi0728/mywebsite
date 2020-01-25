@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatApp</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <link href="{% static '/css/chatcss.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather|Rubik&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <span style="">Chat App Register</span>
+    </div>
+
+    <!-- Login Form -->
+    <form action="register" method="post">
+        {% csrf_token %}
+        <input type="text" class="fadeIn second" name="firstname" placeholder="First Name" required>
+        <input type="text" class="fadeIn second" name="lastname" placeholder="Last Name" required>
+        <input type="text" class="fadeIn second" name="username" placeholder="Username" required>
+        <input type="email" class="fadeIn second" name="emailid" placeholder="Email" required>
+        <input type="password" class="fadeIn third" name="password1" placeholder="Password" required>
+        <input type="password" class="fadeIn third" name="password2" placeholder="Confirm Password" required>
+        <input type="submit" class="fadeIn fourth" name="register" value="Register">
+    </form>
+    {% for message in messages %}
+          <script>alert("{{message}}");</script>
+    {% endfor %}
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="login">Already Have Account?</a>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
