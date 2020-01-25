@@ -63,7 +63,7 @@ def chatmain(request):
         if cbusername == cbadminname:
             cbmsgbyuser = 'False'
             cbmsgbyadmin = 'True'
-            cbusername = 'php28'
+            cbusername = 'raj07'
             msg = Chatboard.objects.create(cbusername=cbusername, cbadminname=cbadminname, cbmessage=cbmsg,
                                            cbmsgbyuser=cbmsgbyuser,cbmsgbyadmin=cbmsgbyadmin)
             msg.save()
