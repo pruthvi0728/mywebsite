@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatApp</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <link href="{% static '/css/chatcss.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static '/css/selectusr.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather|Rubik&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="wrapper fadeInDown container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="formContent">
+                    <div class="fadeIn first">
+                      <span class="chathead">Chat Board</span>
+                        <h5>Hello , {{user.first_name}}</h5>
+                    </div>
+                    <br/>
+                    <!-- select Form -->
+                    <form action="selectusr" onsubmit="return validateForm()" method="post">
+                        {% csrf_token %}
+                        {% for usr in usrlist %}
+                        <div class="fadeIn first">
+                            <label for="{{usr}}">
+                                <input type="radio" value="{{usr}}" name="radiobtn" id="{{usr}}" > <span>{{usr}}</span>
+                            </label>
+                        </div>
+                        {% endfor %}
+                        <input type="submit" class="fadeIn fourth" name="send" value="Send">
+                    </form>
+                    <div id="formFooter">
+                      <a class="underlineHover" href="logout">LogOut</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    function validateForm() {
+    var radios = document.getElementsByName("radiobtn");
+    var formValid = false;
+
+    var i = 0;
+    while (!formValid && i < radios.length) {
+        if (radios[i].checked) formValid = true;
+        i++;
+    }
+
+    if (!formValid) alert("Must check some option!");
+    return formValid;
+}
+</script>
+</body>
+</html>

@@ -14,18 +14,10 @@
 <body>
     <div class="wrapper fadeInDown container">
         <div class="row">
-            <div class="col-md-2">
-                {% if user.username == 'Admin_Pruthvi' %}
+            <div class="col-md-9">
+                <div class="formContent">
                     <div class="fadeIn first">
-                      <span style="">Chat Board</span>
-                        <h6>Hello , {{user.first_name}}</h6>
-                    </div>
-                {% endif %}
-            </div>
-            <div class="col-md-10">
-                <div id="formContent">
-                    <div class="fadeIn first">
-                      <span id="chathead">Chat Board</span>
+                      <span class="chathead">Chat Board</span>
                         <h5>Hello , {{user.first_name}}</h5>
                     </div>
 
@@ -40,12 +32,14 @@
                             <div class="msgtxtl text-wrap  text-left col-12"><div class="brd">&nbsp; Admin: <br/>{{msg.cbmessage}} &nbsp;</div></div>
                                     {% endif %}
                                 {% endif %}
-                                {% if msg.cbusername == 'raj07' %}
-                                    {% if msg.cbmsgbyuser %}
-                            <div class="msgtxtl text-wrap  text-left col-12"><div class="brd">&nbsp; User: <br/>{{msg.cbmessage}} &nbsp;</div></div>
-                                    {% endif %}
-                                    {% if msg.cbmsgbyadmin %}
-                            <div class="msgtxtr text-wrap  text-right col-12"><div class="brd">&nbsp; You: <br/>{{msg.cbmessage}} &nbsp;</div></div>
+                                {% if user.is_superuser %}
+                                    {% if msg.cbusername == selectusrname and user.username == msg.cbadminname %}
+                                        {% if msg.cbmsgbyuser %}
+                                <div class="msgtxtl text-wrap  text-left col-12"><div class="brd">&nbsp; User: <br/>{{msg.cbmessage}} &nbsp;</div></div>
+                                        {% endif %}
+                                        {% if msg.cbmsgbyadmin %}
+                                <div class="msgtxtr text-wrap  text-right col-12"><div class="brd">&nbsp; You: <br/>{{msg.cbmessage}} &nbsp;</div></div>
+                                        {% endif %}
                                     {% endif %}
                                 {% endif %}
                             {% empty %}
@@ -55,13 +49,26 @@
                     </div>
                     <br/>
                     <!-- Chat Form -->
-                    <form action="chatmain" method="post">
-                        {% csrf_token %}
-                        <input type="text" class="fadeIn third" name="msg" placeholder="Type a message" required>
-                        <input type="hidden" class="fadeIn third" name="username" value="{{user.username}}" required>
-                        <input type="submit" class="fadeIn fourth" name="send" value="Send">
-                    </form>
+                    {% if user.is_superuser %}
+                        <form action="chatmain" method="post">
+                            {% csrf_token %}
+                            <input type="text" class="fadeIn third" name="msg" placeholder="Type a message" required>
+                            <input type="hidden" class="fadeIn third" name="username" value="{{user.username}}" required>
+                            <input type="hidden" class="fadeIn third" name="selusername" value="{{selectusrname}}" required>
+                            <input type="submit" class="fadeIn fourth" name="send" value="Send">
+                        </form>
+                    {% else %}
+                        <form action="chatmain" method="post">
+                            {% csrf_token %}
+                            <input type="text" class="fadeIn third" name="msg" placeholder="Type a message" required>
+                            <input type="hidden" class="fadeIn third" name="username" value="{{user.username}}" required>
+                            <input type="submit" class="fadeIn fourth" name="send" value="Send">
+                        </form>
+                    {% endif %}
                     <div id="formFooter">
+                        {% if user.is_superuser %}
+                      <a class="underlineHover" href="selectusr">Back to Select</a><br />
+                        {% endif %}
                       <a class="underlineHover" href="logout">LogOut</a>
                     </div>
                 </div>

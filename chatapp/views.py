@@ -4,6 +4,8 @@ from .models import Chatboard
 from django.contrib import messages
 # Create your views here.
 
+selectusername = None
+
 
 def login(request):
     if request.method == 'POST':
@@ -13,6 +15,8 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
+            if user.is_superuser:
+                return redirect('selectusr')
             return redirect('chatmain')
         else:
             messages.info(request, "Invalid Credentials")
@@ -55,6 +59,7 @@ def logout(request):
 
 
 def chatmain(request):
+    global selectusername
     if request.method == 'POST':
         cbmsg = request.POST['msg']
         cbadminname = 'Admin_Pruthvi'
@@ -63,9 +68,10 @@ def chatmain(request):
         if cbusername == cbadminname:
             cbmsgbyuser = 'False'
             cbmsgbyadmin = 'True'
-            cbusername = 'raj07'
+            cbusername = request.POST['selusername']
+            selectusername = cbusername
             msg = Chatboard.objects.create(cbusername=cbusername, cbadminname=cbadminname, cbmessage=cbmsg,
-                                           cbmsgbyuser=cbmsgbyuser,cbmsgbyadmin=cbmsgbyadmin)
+                                           cbmsgbyuser=cbmsgbyuser, cbmsgbyadmin=cbmsgbyadmin)
             msg.save()
             return redirect('chatmain')
         else:
@@ -74,4 +80,18 @@ def chatmain(request):
             return redirect('chatmain')
     else:
         msgs = Chatboard.objects.all()
-        return render(request, 'chatmain.html', {'msgs': msgs})
+        return render(request, 'chatmain.html', {'msgs': msgs, 'selectusrname': selectusername})
+
+
+def selectusr(request):
+    global selectusername
+    if request.method == 'POST':
+        selectusername = request.POST['radiobtn']
+        return redirect('chatmain')
+    else:
+        msgs = Chatboard.objects.all()
+        usrlist = []
+        for un in msgs:
+            if un.cbusername not in usrlist:
+                usrlist.append(un.cbusername)
+        return render(request, 'selectusr.html', {'msg': msgs, 'usrlist': usrlist})
