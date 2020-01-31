@@ -10,3 +10,4 @@ class Chatboard(models.Model):
     cbmsgbyuser = models.BooleanField(default=True)
     cbmsgbyadmin = models.BooleanField(default=False)
     cbtime = models.TimeField(auto_now=False, auto_now_add=True, blank=True)
+    cbdatetime = models.DateTimeField(auto_now=False, auto_now_add=True, blank=True)

@@ -25,14 +25,14 @@
                     <!-- select Form -->
                     <form action="selectusr" onsubmit="return validateForm()" method="post">
                         {% csrf_token %}
-                        {% for usr in usrlist %}
-                        <div class="fadeIn first">
-                            <label for="{{usr}}">
-                                <input type="radio" value="{{usr}}" name="radiobtn" id="{{usr}}" > <span>{{usr}}</span>
-                            </label>
-                        </div>
-                        {% endfor %}
-                        <input type="submit" class="fadeIn fourth" name="select" value="Select">
+                            {% for usr in usrlist %}
+                            <div class="fadeIn first">
+                                <label for="{{usr}}">
+                                    <input type="radio" value="{{usr}}" name="radiobtn" id="{{usr}}" > <span>{{usr}}</span>
+                                </label>
+                            </div>
+                            {% endfor %}
+                            <input type="submit" class="fadeIn fourth" name="select" value="Select">
                     </form>
                     <div id="formFooter">
                       <a class="underlineHover" href="logout">LogOut</a>
