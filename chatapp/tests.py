@@ -87,8 +87,7 @@ class TestView(TestCase):
 
     # done
     def test_register_POST(self):
-        self.rcred = {'firstname': 'Test', 'lastname': 'Test001', 'username': 'Test002', 'emailid': 'test@test.com',
-                     'password1': 'test123', 'password2': 'test123'}
+        self.rcred = {'firstname': 'Test', 'lastname': 'Test001', 'username': 'Test002', 'emailid': 'test@test.com', 'password1': 'test123', 'password2': 'test123'}
         response = self.client.post(self.register_url, self.rcred, follow=True)
         self.assertFalse(response.context['user'].is_active)
         self.assertEquals(response.status_code, 200)
@@ -117,3 +116,12 @@ class TestView(TestCase):
         self.assertTrue(response.context['user'].is_authenticated)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'chatmain.html')
+
+
+class TestModel(TestCase):
+
+    def setUp(self):
+        self.cb = Chatboard.objects.create(cbusername='TestUser', cbadminname='TestAdmin', cbmessage='TestMessage')
+
+    def test_message_model(self):
+        self.assertEquals(self.cb.cbmessage, 'TestMessage')
