@@ -5,6 +5,7 @@ from django.contrib.sessions.models import Session
 from .models import Chatboard
 from django.contrib import messages
 from .msgenc import msgdecode, msgencode
+from django.urls import reverse
 from datetime import datetime
 # Create your views here.
 
@@ -23,15 +24,15 @@ def login(request):
             if user.is_superuser:
                 request.session['user_loggedin'] = True
                 request.session['admin_loggedin'] = True
-                return redirect('selectusr')
+                return redirect(reverse('selectusr'))
             request.session['user_loggedin'] = True
-            return redirect('chatmain')
+            return redirect(reverse('chatmain'))
         else:
             messages.info(request, "Invalid Credentials")
-            return redirect('login')
+            return redirect(reverse('login'))
     else:
         if request.session.has_key('user_loggedin'):
-            return redirect('chatmain')
+            return redirect(reverse('chatmain'))
         else:
             return render(request, 'login.html')
 
@@ -47,29 +48,34 @@ def register(request):
 
         if password1 != password2:
             messages.info(request, "Password mismatch")
-            return redirect('register')
+            return redirect(reverse('register'))
         elif User.objects.filter(username=username).exists():
             messages.info(request, "Username Taken")
-            return redirect('register')
+            return redirect(reverse('register'))
         elif User.objects.filter(email=emailid).exists():
             messages.info(request, "Already Have Account try login")
-            return redirect('login')
+            return redirect(reverse('login'))
         else:
             user = User.objects.create_user(username=username, email=emailid, password=password1, first_name=firstname,
                                             last_name=lastname)
             user.save()
             messages.info(request, "Account Created Successfully")
-            return redirect('login')
+            return redirect(reverse('login'))
     else:
         if request.session.has_key('user_loggedin'):
-            return redirect('chatmain')
+            return redirect(reverse('chatmain'))
         else:
             return render(request, 'register.html')
 
 
 def logout(request):
     auth.logout(request)
-    return redirect('/')
+    try:
+        del request.session["user_loggedin"]
+        del request.session["admin_loggedin"]
+    except KeyError:
+        pass
+    return redirect(reverse('index'))
 
 
 @login_required
@@ -89,11 +95,11 @@ def chatmain(request):
             msg = Chatboard.objects.create(cbusername=cbusername, cbadminname=cbadminname, cbmessage=cbmsg,
                                            cbmsgbyuser=cbmsgbyuser, cbmsgbyadmin=cbmsgbyadmin)
             msg.save()
-            return redirect('chatmain')
+            return redirect(reverse('chatmain'))
         else:
             msg = Chatboard.objects.create(cbusername=cbusername, cbadminname=cbadminname, cbmessage=cbmsg)
             msg.save()
-            return redirect('chatmain')
+            return redirect(reverse('chatmain'))
     else:
         if request.session.has_key('user_loggedin'):
             msgs = Chatboard.objects.order_by('cbdatetime')
@@ -101,7 +107,7 @@ def chatmain(request):
                 msg.cbmessage = msgdecode(msg.cbmessage, key)
             return render(request, 'chatmain.html', {'msgs': msgs, 'selectusrname': selectusername, 'key': key})
         else:
-            return redirect('login')
+            return redirect(reverse('login'))
 
 
 @login_required
@@ -109,7 +115,7 @@ def selectusr(request):
     global selectusername
     if request.method == 'POST':
         selectusername = request.POST['radiobtn']
-        return redirect('chatmain')
+        return redirect(reverse('chatmain'))
     else:
         if request.session.has_key('admin_loggedin'):
             msgs = Chatboard.objects.all()
@@ -119,4 +125,4 @@ def selectusr(request):
                     usrlist.append(un.cbusername)
             return render(request, 'selectusr.html', {'msg': msgs, 'usrlist': usrlist})
         else:
-            return redirect('login')
+            return redirect(reverse('login'))
