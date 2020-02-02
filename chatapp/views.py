@@ -24,7 +24,7 @@ def login(request):
             if user.is_superuser:
                 request.session['user_loggedin'] = True
                 request.session['admin_loggedin'] = True
-                request.sesion.set_expiry(0)
+                request.session.set_expiry(0)
                 return redirect(reverse('selectusr'))
             request.session['user_loggedin'] = True
             request.session.set_expiry(0)
