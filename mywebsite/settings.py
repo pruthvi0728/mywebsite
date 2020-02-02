@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'x)_d)c3mtmctwuuoq0-87_8kh$+n)e
 # DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://stormy-caverns-69751.herokuapp.com/', '127.0.0.1']
 
 
 # Application definition
