@@ -90,9 +90,8 @@ DATABASES = {
 """
 
 # db_from_env = dj_database_url.config(conn_max_age=500)
-# DATABASES = {'default': dj_database_url.config(default='postgres://zthfnwrxafuprx:1a76f9894f31aaf399367a7fb779b01e65d51b9928f85b00035916d0197299a8@ec2-52-203-98-126.compute-1.amazonaws.com:5432/dd3jif62vasi6b')}
-
-DATABASES = dj_database_url.config(conn_max_age=600, ssl_require=True)
+DATABASES = {'default': dj_database_url.config(default='postgres://zthfnwrxafuprx:1a76f9894f31aaf399367a7fb779b01e65d51b9928f85b00035916d0197299a8@ec2-52-203-98-126.compute-1.amazonaws.com:5432/dd3jif62vasi6b')}
+# DATABASES = dj_database_url.config(conn_max_age=500)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
