@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import dj_database_url
+from decouple import config
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,13 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'x)_d)c3mtmctwuuoq0-87_8kh$+n)e!o4$j!t9wj#va3_ozs2('
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'x)_d)c3mtmctwuuoq0-87_8kh$+n)e!o4$j!t9wj#va3_ozs2(')
+
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', config('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
-ALLOWED_HOSTS = ['stormy-caverns-69751.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = [config('ALLOWED_HOSTS_1'), config('ALLOWED_HOSTS_2')]
 
 
 # Application definition
@@ -90,7 +90,7 @@ DATABASES = {
 """
 
 # db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES = {'default': dj_database_url.config(default='postgres://zthfnwrxafuprx:1a76f9894f31aaf399367a7fb779b01e65d51b9928f85b00035916d0197299a8@ec2-52-203-98-126.compute-1.amazonaws.com:5432/dd3jif62vasi6b')}
+DATABASES = {'default': dj_database_url.config(default=config('DB'))}
 # DATABASES = dj_database_url.config(conn_max_age=500)
 
 # Password validation

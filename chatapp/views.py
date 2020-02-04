@@ -6,11 +6,12 @@ from .models import Chatboard
 from django.contrib import messages
 from .msgenc import msgdecode, msgencode
 from django.urls import reverse
+from decouple import config
 from datetime import datetime
 # Create your views here.
 
 selectusername = None
-key = 'QfTjWnZr4u7x!A%C*F-JaNdRgUkXp2s5v8y/B?E(G+KbPeShVmYq3t6w9z$C&F)J@McQfTjWnZr4u7x!A%D*G-KaPdRgUkXp2s5v'
+key = config('ENC_KEY')
 
 
 def login(request):
@@ -85,7 +86,7 @@ def chatmain(request):
     global selectusername
     if request.method == 'POST':
         cbmsg = request.POST['msg']
-        cbadminname = 'Admin_Pruthvi'
+        cbadminname = config('ADMIN_NAME')
         cbusername = request.POST['username']
         cbmsg = msgencode(cbmsg, key)
 
