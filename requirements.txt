@@ -1,3 +1,4 @@
+decouple
 altgraph==0.16.1
 asgiref==3.2.3
 astroid==2.3.3
@@ -47,7 +48,6 @@ pytest==5.3.5
 pytest-cov==2.8.1
 pytest-django==3.8.0
 python-dateutil==2.8.1
-python-decouple==3.3
 python-jsonrpc-server==0.3.2
 python-language-server==0.31.4
 pytz==2019.3
