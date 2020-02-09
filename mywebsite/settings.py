@@ -53,18 +53,23 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# use for avoid http requset accidentlly
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
+# Cross-site Scripting
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
+# force to https all request
 SECURE_SSL_REDIRECT = True
 
+# HTTP Strict Transport Security
 SECURE_HSTS_SECONDS = 2592000   # -> 30 days 86400 1 day
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
+# set referrer policy
 SECURE_REFERRER_POLICY = 'same-origin'
 
 ROOT_URLCONF = 'mywebsite.urls'
@@ -103,7 +108,6 @@ DATABASES = {
 }
 """
 
-# db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES = {'default': dj_database_url.config(default=config('DB'))}
 # DATABASES = dj_database_url.config(conn_max_age=500)
 
