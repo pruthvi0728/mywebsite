@@ -15,6 +15,7 @@ databases==0.2.6
 dj-database-url==0.5.0
 Django==3.0.2
 django-csp==3.6
+django-heroku==0.3.1
 django-secure==1.0.1
 entrypoints==0.3
 Faker==0.9.1
@@ -57,6 +58,7 @@ pywin32-ctypes==0.2.0
 PyYAML==5.3
 requests==2.22.0
 rope==0.14.0
+selenium==3.141.0
 shellescape==3.8.1
 six==1.13.0
 snowballstemmer==2.0.0
