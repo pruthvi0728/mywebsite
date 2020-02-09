@@ -26,7 +26,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', config('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 # os.environ.get('DJANGO_DEBUG', '') != 'False'
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', False))
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', '')) != 'False'
+
 # ALLOWED_HOSTS = [config('ALLOWED_HOSTS_1'), config('ALLOWED_HOSTS_2')]
 ALLOWED_HOSTS = ['stormy-caverns-69751.herokuapp.com/', '127.0.0.1']
 
@@ -66,9 +67,9 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = True
 
 # HTTP Strict Transport Security
-# SECURE_HSTS_SECONDS = 2592000   # -> 30 days 86400 1 day
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-# SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_SECONDS = 2592000   # -> 30 days 86400 1 day
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 
 # set referrer policy
 SECURE_REFERRER_POLICY = 'same-origin'
